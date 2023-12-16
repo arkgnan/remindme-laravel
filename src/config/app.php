@@ -183,6 +183,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        // 'Laravel\Sanctum\Guard' => App\Overrides\Laravel\Sanctum\Guard::class
     ])->toArray(),
 
 ];
