@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Reminder;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -33,7 +34,7 @@ it('can fetch a reminder', function () {
             'description' => $reminder->description,
             'remind_at' => $reminder->remind_at,
             'event_at' => $reminder->event_at,
-        ]
+        ],
     ];
 
     $response->assertStatus(200)->assertJson($data);
@@ -53,7 +54,7 @@ it('can update a reminder', function () {
             'description' => $reminder->description,
             'remind_at' => $reminder->remind_at,
             'event_at' => $reminder->event_at,
-        ]
+        ],
     ];
     $response->assertStatus(200)->assertJson($data);
     $this->assertDatabaseHas('reminders', $updatedReminder);

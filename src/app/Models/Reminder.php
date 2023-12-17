@@ -10,15 +10,17 @@ use Illuminate\Database\Eloquent\Model;
 class Reminder extends Model
 {
     use HasFactory;
+
     protected $fillable = ['title', 'description', 'remind_at', 'event_at', 'user_id'];
 
     protected $hidden = [
         'created_at',
         'updated_at',
-        'user_id'
+        'user_id',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Reminder;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -9,14 +10,14 @@ it('can create a reminder', function () {
     $user = User::create([
         'email' => 'test@mail.com',
         'name' => 'test account',
-        'password' => bcrypt('123456')
+        'password' => bcrypt('123456'),
     ]);
     $reminder = Reminder::create([
         'user_id' => $user->id,
         'title' => 'title event',
         'description' => 'detail of event',
         'remind_at' => 1701246722,
-        'event_at' => 1701223200
+        'event_at' => 1701223200,
     ]);
     expect($user->email)->toBe('test@mail.com');
     expect($reminder->title)->toBe('title event');

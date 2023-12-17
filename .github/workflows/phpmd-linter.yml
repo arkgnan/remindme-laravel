@@ -1,0 +1,24 @@
+name: Laravel Package Tests
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  phpmd-linter:
+    name: PHPMD
+    runs-on: ubuntu-latest
+    steps:
+        - name: Check out code into the workspace
+            uses: actions/checkout@v3
+        - name: Run php check code with reviewdog
+            uses: GeneaLabs/action-reviewdog-phpmd@1.0.0
+            with:
+                github_token: '${{ github.token }}'
+                level: 'warning'
+                reporter: 'github-pr-check'
+                standard: 'cleancode,codesize,controversial,design,naming,unusedcode'
+                target_directory: 'src'
+                exclude: '*/Migrations/*'
+                name: 'PHPMD'

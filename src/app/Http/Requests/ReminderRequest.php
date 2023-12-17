@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 class ReminderRequest extends FormRequest
 {
     use CommonErrors;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -28,19 +29,20 @@ class ReminderRequest extends FormRequest
     {
         if ($this->getMethod() == 'POST') {
             $rules = [
-                    'title' => ['required', 'max:255'],
-                    'description' => ['required', 'min:2'],
-                    'remind_at' => ['required', 'integer'],
-                    'event_at' => ['required', 'integer']
+                'title' => ['required', 'max:255'],
+                'description' => ['required', 'min:2'],
+                'remind_at' => ['required', 'integer'],
+                'event_at' => ['required', 'integer'],
             ];
         } else {
             $rules = [
                 'title' => ['max:255'],
                 'description' => ['min:2'],
                 'remind_at' => ['integer'],
-                'event_at' => ['integer']
+                'event_at' => ['integer'],
             ];
         }
+
         return $rules;
     }
 
