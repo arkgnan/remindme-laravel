@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3
       - uses: actions/setup-node@v3
       - run: cd src && npm install
       - uses: reviewdog/action-eslint@v1
