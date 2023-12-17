@@ -15,5 +15,6 @@ jobs:
       - run: cd src && npm install
       - uses: reviewdog/action-eslint@v1
         with:
-          reporter: github-check
+          reporter: github-
+          workdir: 'src',
           eslint_flags: '.'
