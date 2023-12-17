@@ -4,10 +4,10 @@ use App\Http\Controllers\Rest\LoginController;
 use App\Http\Controllers\Rest\ReminderController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('session', [LoginController::class, 'generateToken']);
+Route::post('session', [LoginController::class, 'generateToken'])->name('generate.token');
 Route::group([
-    'middleware' => ['api', 'auth:sanctum'],
-], function ($router) {
-    Route::put('session', [LoginController::class, 'refreshToken']);
+    'middleware' => ['auth:sanctum'],
+], function () {
+    Route::put('session', [LoginController::class, 'refreshToken'])->name('refresh.token');
     Route::apiResource('reminders', ReminderController::class);
 });
