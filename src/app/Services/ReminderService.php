@@ -1,10 +1,10 @@
 <?php
+
 namespace App\Services;
 
 use App\Contracts\ReminderInterface;
 use App\Models\Reminder;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class ReminderService implements ReminderInterface
@@ -15,6 +15,7 @@ class ReminderService implements ReminderInterface
             ->take($limit)
             ->orderBy('event_at', 'desc')
             ->get();
+
         return $reminder->toArray();
     }
 
@@ -22,12 +23,14 @@ class ReminderService implements ReminderInterface
     {
         $data['user_id'] = Auth()->user()->id;
         $reminder = Reminder::create($data);
+
         return $reminder;
     }
 
     public function view($id): Reminder
     {
         $reminder = Reminder::find($id);
+
         return $reminder;
     }
 
@@ -35,16 +38,19 @@ class ReminderService implements ReminderInterface
     {
         $reminder = Reminder::find($id)
             ->update($data);
+
         return $reminder;
     }
 
-    public function delete($id): Bool
+    public function delete($id): bool
     {
         try {
             Reminder::find($id)->delete();
+
             return true;
         } catch (\Exception $e) {
             Log::error($e->getMessage());
+
             return false;
         }
     }

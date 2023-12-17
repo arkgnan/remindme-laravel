@@ -5,9 +5,8 @@ namespace Database\Seeders;
 use App\Models\Reminder;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -30,11 +29,11 @@ class ReminderSampleSeeder extends Seeder
                         'title' => $faker->sentence,
                         'description' => $faker->paragraph(),
                         'remind_at' => $today->addDays($i - 1)->timestamp,
-                        'event_at' => $today->addDays($i)->timestamp
+                        'event_at' => $today->addDays($i)->timestamp,
                     ]);
                 }
                 DB::commit();
-            } catch(\Exception $e){
+            } catch (\Exception $e) {
                 DB::rollback();
                 Log::error($e->getMessage());
             }

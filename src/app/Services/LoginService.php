@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Contracts\LoginInterface;
@@ -16,19 +17,19 @@ class LoginService implements LoginInterface
         if ($validCredentials) {
             return $user;
         } else {
-            throw new \Exception("Not found");
+            throw new \Exception('Not found');
         }
     }
 
-    public function createToken(User $user): Array
+    public function createToken(User $user): array
     {
         // $accessToken = $user->createToken('access_token', [TokenAbility::ACCESS_API->value], Carbon::now()->addSeconds(20));
         $accessToken = $user->createToken('access_token', [TokenAbility::ACCESS_API->value], Carbon::now()->addDay());
         $refreshToken = $user->createToken('refresh_token', [TokenAbility::ISSUE_ACCESS_TOKEN->value], Carbon::now()->addDays(7));
 
         return [
-            "access_token" => $accessToken,
-            "refresh_token" => $refreshToken
+            'access_token' => $accessToken,
+            'refresh_token' => $refreshToken,
         ];
     }
 }

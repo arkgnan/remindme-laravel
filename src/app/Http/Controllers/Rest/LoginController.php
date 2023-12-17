@@ -18,8 +18,7 @@ class LoginController extends Controller
      */
     public function __construct(
         LoginService $loginService
-    )
-    {
+    ) {
         $this->loginService = $loginService;
     }
 
@@ -32,17 +31,18 @@ class LoginController extends Controller
             abort(403);
         }
         $token = $this->loginService->createToken($user);
+
         return response()->json([
-            "ok" => true,
-            "data" => [
-                "user" => [
-                    "id" => $user->id,
-                    "name" => $user->name,
-                    "email" => $user->email
+            'ok' => true,
+            'data' => [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
                 ],
-                "access_token" => $token['access_token']->plainTextToken,
-                "refresh_token" => $token['refresh_token']->plainTextToken
-            ]
+                'access_token' => $token['access_token']->plainTextToken,
+                'refresh_token' => $token['refresh_token']->plainTextToken,
+            ],
         ], 200);
     }
 
@@ -50,17 +50,18 @@ class LoginController extends Controller
     {
         $user = Auth()->user();
         $token = $this->loginService->createToken($user);
+
         return response()->json([
-            "ok" => true,
-            "data" => [
-                "user" => [
-                    "id" => $user->id,
-                    "name" => $user->name,
-                    "email" => $user->email
+            'ok' => true,
+            'data' => [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
                 ],
-                "access_token" => $token['access_token']->plainTextToken,
-                "refresh_token" => $token['refresh_token']->plainTextToken
-            ]
+                'access_token' => $token['access_token']->plainTextToken,
+                'refresh_token' => $token['refresh_token']->plainTextToken,
+            ],
         ], 200);
     }
 }

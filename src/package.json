@@ -3,7 +3,10 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "prepare": "cd .. && husky install src/.husky",
+        "lint": "eslint",
+        "precommit": "lint-staged"
     },
     "devDependencies": {
         "@headlessui/react": "^1.4.2",
@@ -12,11 +15,26 @@
         "@vitejs/plugin-react": "^4.0.3",
         "autoprefixer": "^10.4.12",
         "axios": "^1.6.1",
+        "eslint": "^8.56.0",
+        "eslint-plugin-react": "^7.33.2",
+        "husky": "^8.0.3",
         "laravel-vite-plugin": "^0.8.0",
+        "lint-staged": "^15.2.0",
         "postcss": "^8.4.18",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "tailwindcss": "^3.2.1",
         "vite": "^4.0.0"
+    },
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx}": [
+            "./node_modules/.bin/eslint --fix",
+            "git add"
+        ]
+    },
+    "husky": {
+        "hooks": {
+          "pre-commit": "npm run precommit"
+        }
     }
 }

@@ -1,49 +1,51 @@
 <?php
+
 namespace App\Traits;
 
-trait CommonErrors {
-    public function badRequest(): Array
+trait CommonErrors
+{
+    public function badRequest(): array
     {
         return [
-            "ok" => false,
-            "err" => "ERR_BAD_REQUEST",
-            "msg" => "invalid value of `type`"
+            'ok' => false,
+            'err' => 'ERR_BAD_REQUEST',
+            'msg' => 'invalid value of `type`',
         ];
     }
 
-    public function unauthorized(): Array
+    public function unauthorized(): array
     {
         return [
-            "ok" => false,
-            "err" => "ERR_INVALID_ACCESS_TOKEN",
-            "msg" => "invalid access token"
+            'ok' => false,
+            'err' => 'ERR_INVALID_ACCESS_TOKEN',
+            'msg' => 'invalid access token',
         ];
     }
 
-    public function forbidden(): Array
+    public function forbidden(): array
     {
         return [
-            "ok" => false,
-            "err" => "ERR_FORBIDDEN_ACCESS",
-            "msg" => "user doesn't have enough authorization"
+            'ok' => false,
+            'err' => 'ERR_FORBIDDEN_ACCESS',
+            'msg' => "user doesn't have enough authorization",
         ];
     }
 
-    public function notFound(): Array
+    public function notFound(): array
     {
         return [
-            "ok" => false,
-            "err" => "ERR_NOT_FOUND",
-            "msg" => "resource is not found"
+            'ok' => false,
+            'err' => 'ERR_NOT_FOUND',
+            'msg' => 'resource is not found',
         ];
     }
 
-    public function internalServerError(): Array
+    public function internalServerError(): array
     {
         return [
-            "ok" => false,
-            "err" => "ERR_INTERNAL_ERROR",
-            "msg" => "unable to connect into database"
+            'ok' => false,
+            'err' => 'ERR_INTERNAL_ERROR',
+            'msg' => 'unable to connect into database',
         ];
     }
 }

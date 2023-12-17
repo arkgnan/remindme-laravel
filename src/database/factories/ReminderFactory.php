@@ -4,8 +4,8 @@ namespace Database\Factories;
 
 use App\Models\Reminder;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Factory as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Reminder>
@@ -28,12 +28,13 @@ class ReminderFactory extends Factory
     {
         $faker = Faker::create();
         $today = Carbon::now();
+
         return [
             'user_id' => 1,
             'title' => $faker->sentence,
             'description' => $faker->paragraph(),
             'remind_at' => $today->addDays(1)->timestamp,
-            'event_at' => $today->addDays(2)->timestamp
+            'event_at' => $today->addDays(2)->timestamp,
         ];
     }
 }
