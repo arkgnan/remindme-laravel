@@ -4,7 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import axios from 'axios';
 import { DateTime } from "luxon";
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 
 export default function ReminderView() {
     const [reminder, setReminder] = useState({});
@@ -45,7 +45,7 @@ export default function ReminderView() {
             getReminder(token);
         }
     }
-    React.useEffect(() => {
+    useEffect(() => {
         checkCookie();
     }, []);
     return (
@@ -89,11 +89,11 @@ export default function ReminderView() {
                         )
                     }
 
-                    <div className='flex justify-between items-center'>
+                    <div className='mt-2 flex justify-between items-center'>
                         <div className='w-24'>
                             <button className='bg-red-50 w-full dark:bg-red-800/20 rounded py-1 px-2 text-red-500' onClick={() => deleteReminder(reminderId)}>Delete</button>
                         </div>
-                        <div className='mt-2 w-24'>
+                        <div className='w-24'>
                             <div className='bg-yellow-50 w-full dark:bg-yellow-800/20 rounded py-1 px-2 text-center'>
                                 <a className='text-yellow-500' href={route('reminder.form', reminderId)}>Edit</a>
                             </div>
