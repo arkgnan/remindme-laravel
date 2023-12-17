@@ -13,14 +13,13 @@ jobs:
       - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
         with:
           php-version: '8.2'
-          target_directory: 'src'
       - uses: actions/checkout@v3
       - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+        run: cd src || php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: cd src || composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Launch Pint inspection
-        run: vendor/bin/pint
+        run: cd src || vendor/bin/pint
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
