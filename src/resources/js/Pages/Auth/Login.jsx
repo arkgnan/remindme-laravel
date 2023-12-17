@@ -1,36 +1,74 @@
-import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
+/* eslint-disable no-undef */
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import GuestLayout from '@/Layouts/GuestLayout';
+import { Head } from '@inertiajs/react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { DateTime } from "luxon";
+import { React, useEffect, useState } from 'react';
 
-export default function Login({ status, canResetPassword }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+export default function Login() {
+    const [data, setData] = useState({
         email: '',
         password: '',
-        remember: false,
     });
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const isAuthenticated = !!Cookies.get('isLoggedIn');
+    if (isAuthenticated) {
+        window.location.href = route('dashboard');
+    }
 
     useEffect(() => {
         return () => {
-            reset('password');
+            setData((prevState) => ({
+                ...prevState,
+                password: ''
+            }))
         };
     }, []);
 
     const submit = (e) => {
+        setLoading(true);
+        setError(false);
         e.preventDefault();
-
-        post(route('login'));
+        const userData = {
+            email: data.email,
+            password: data.password
+        };
+        axios.post(route('generate.token'), JSON.stringify(userData), {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then((response) => {
+                if (response.status === 200 && response.data.ok === true) {
+                    const result = response.data.data;
+                    const dt = DateTime.now();
+                    Cookies.set('authExpiration', 1, { expires: dt.plus({seconds: 20}).toJSDate() });
+                    Cookies.set('access_token', result.access_token);
+                    Cookies.set('refresh_token', result.refresh_token);
+                    Cookies.set('isLoggedIn', 1);
+                    localStorage.setItem('user', JSON.stringify(result.user));
+                } else {
+                    setError(response.data.msg);
+                }
+                setLoading(false);
+            })
+            .catch((error) => {
+                setError(error.message);
+                setLoading(false);
+            });
     };
 
     return (
         <GuestLayout>
             <Head title="Log in" />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            {error && <div className="mb-4 font-medium text-sm text-red-600">{error}</div>}
 
             <form onSubmit={submit}>
                 <div>
@@ -44,10 +82,11 @@ export default function Login({ status, canResetPassword }) {
                         className="mt-1 block w-full"
                         autoComplete="username"
                         isFocused={true}
-                        onChange={(e) => setData('email', e.target.value)}
+                        onChange={(e) => setData((prevState) => ({
+                            ...prevState,
+                            email: e.target.value
+                        }))}
                     />
-
-                    <InputError message={errors.email} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
@@ -60,34 +99,15 @@ export default function Login({ status, canResetPassword }) {
                         value={data.password}
                         className="mt-1 block w-full"
                         autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
+                        onChange={(e) => setData((prevState) => ({
+                            ...prevState,
+                            password: e.target.value
+                        }))}
                     />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="block mt-4">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) => setData('remember', e.target.checked)}
-                        />
-                        <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
-                    </label>
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton className="ms-4" disabled={loading}>
                         Log in
                     </PrimaryButton>
                 </div>
