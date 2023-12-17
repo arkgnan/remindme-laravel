@@ -89,12 +89,10 @@ class ReminderController extends Controller
     {
         $data = $request->validated();
         try {
-            $data['remind_at'] = Carbon::now()->addMinutes(2)->timestamp;
             $reminder->update($data);
             return response()->json([
                 "ok" => true,
                 "data" => $reminder,
-                "reminder" => Carbon::now()->addMinutes(2)->format('H:i')
             ], 200);
         } catch (\Exception $e) {
             abort($e->getCode());
