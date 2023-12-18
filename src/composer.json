@@ -1,7 +1,8 @@
 {
-    "name": "laravel/laravel",
+    "name": "Remind Me",
+    "version": "1.0.0",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "The web application based on the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
