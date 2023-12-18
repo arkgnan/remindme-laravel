@@ -34,7 +34,11 @@
     },
     "husky": {
         "hooks": {
-          "pre-commit": "npm run precommit"
+            "pre-commit": "npm run precommit"
         }
+    },
+    "dependencies": {
+        "js-cookie": "^3.0.5",
+        "luxon": "^3.4.4"
     }
 }
