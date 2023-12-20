@@ -127,7 +127,7 @@ services:
       - laravel
 
   phpmyadmin:
-    image: phpmyadmin:5.2.0
+    image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     environment:
       PMA_ARBITRARY: 1
